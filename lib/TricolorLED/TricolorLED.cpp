@@ -55,6 +55,7 @@ void TricolorLED::power_off() {
   analogWrite(_green_pin, TricolorLED::_rgb_scale(0));
   analogWrite(_blue_pin, TricolorLED::_rgb_scale(0));
 
+  TricolorLED::state = "OFF";
 }
 
 void TricolorLED::power_on() {
@@ -66,12 +67,5 @@ void TricolorLED::power_on() {
   analogWrite(_green_pin, TricolorLED::_rgb_scale(TricolorLED::green));
   analogWrite(_blue_pin, TricolorLED::_rgb_scale(TricolorLED::blue));
 
-}
-
-void TricolorLED::refresh() {
-  /*
-    Refreshes LED status
-  */
-
-
+  TricolorLED::state = "ON";
 }

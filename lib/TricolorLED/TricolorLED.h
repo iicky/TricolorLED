@@ -19,6 +19,7 @@ class TricolorLED {
     int green;
     int blue;
     int bright;
+    String state;
     String effect;
 
   private:
