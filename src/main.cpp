@@ -50,8 +50,9 @@ void setup() {
   wifi_setup();
   ota_setup();
 
-  // Change color
-  rgb_led.set_color(0, 0, 255, 1);
+  // Set initial color and state
+  rgb_led.state = "ON";
+  rgb_led.set_color(255, 255, 255, 1);
 
 }
 
