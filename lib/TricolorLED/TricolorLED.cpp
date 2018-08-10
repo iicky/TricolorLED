@@ -3,7 +3,6 @@
 */
 
 #include <Arduino.h>
-#include <string>
 #include <TricolorLED.h>
 
 TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin) {
