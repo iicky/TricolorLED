@@ -11,9 +11,11 @@ class TricolorLED {
   public:
 
     TricolorLED(int red_pin, int green_pin, int blue_pin);
-    void set_color(int red, int green, int blue, float bright);
+    void change_brightness(int percent);
     void power_off();
     void power_on();
+    void print_state();
+    void set_color(int red, int green, int blue, float bright);
 
     int red;
     int green;
