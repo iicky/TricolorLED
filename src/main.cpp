@@ -4,12 +4,14 @@
 
 // Arduino libraries
 // --------------------------------------------------
+#include <ArduinoJson.h>
 #include <ArduinoOTA.h>
 #include <ESP8266mDNS.h>
 #include <ESP8266WiFi.h>
 #include <IRremoteESP8266.h>
 #include <IRrecv.h>
 #include <IRutils.h>
+#include <PubSubClient.h>
 #include <WiFiUdp.h>
 
 // Custom LED library
