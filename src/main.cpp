@@ -52,7 +52,7 @@ void setup() {
 
   // Set initial color and state
   rgb_led.state = "ON";
-  rgb_led.set_color(255, 255, 255, 1);
+  rgb_led.set_color(255, 255, 255, 255);
 
 }
 
@@ -129,9 +129,13 @@ void remote_set() {
     // Remote Row: 1
     case 0xFF906F:
       Serial.println("Brightness Up");
+      rgb_led.change_brightness(5);
+      rgb_led.print_state();
       break;
     case 0xFFB847:
       Serial.println("Brightness Down");
+      rgb_led.change_brightness(-5);
+      rgb_led.print_state();
       break;
     case 0xFFF807:
       Serial.println("Time");
@@ -143,6 +147,7 @@ void remote_set() {
       } else {
         rgb_led.power_on();
       }
+      rgb_led.print_state();
       break;
 
     // Remote Row: 2
