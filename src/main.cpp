@@ -46,7 +46,6 @@ decode_results results;
 
 TricolorLED rgb_led(RED_PIN, GREEN_PIN, BLUE_PIN);
 
-
 void setup() {
 
   // Serial setup
@@ -68,8 +67,8 @@ void setup() {
   client.setCallback(callback);
 
   // Set initial color and state
-  //rgb_led.state = "ON";
-  //rgb_led.set_color(255, 255, 255, 255);
+  rgb_led.state = "ON";
+  rgb_led.set_color(255, 255, 255, 255);
 
 }
 
