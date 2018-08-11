@@ -15,7 +15,12 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin) {
   pinMode(_green_pin, OUTPUT);
   pinMode(_blue_pin, OUTPUT);
 
+  state = "ON";
   effect = "solid";
+  red = 255;
+  green = 255;
+  blue = 255;
+  bright = 255;
 
 };
 
