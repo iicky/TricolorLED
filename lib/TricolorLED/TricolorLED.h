@@ -29,6 +29,8 @@ class TricolorLED {
     float _bright_scale(int value);
     int _rgb_scale(int value);
 
+    static const uint8_t PROGMEM _gammaTable[256];
+
     // RGB pins
     int _red_pin;
     int _green_pin;
