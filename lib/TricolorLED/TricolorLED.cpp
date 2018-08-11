@@ -115,10 +115,10 @@ void TricolorLED::set_color(int r, int g, int b, float br) {
   analogWrite(_blue_pin, _rgb_scale(blue));
 
   // Set LED attributes
-  red = red;
-  green = green;
-  blue = blue;
-  bright = bright;
+  red = r;
+  green = g;
+  blue = b;
+  bright = br;
 
   print_state();
 
