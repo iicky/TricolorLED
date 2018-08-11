@@ -26,6 +26,7 @@ class TricolorLED {
 
   private:
 
+    float _bright_scale(int value);
     int _rgb_scale(int value);
 
     // RGB pins

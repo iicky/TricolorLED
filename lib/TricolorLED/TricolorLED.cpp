@@ -19,6 +19,13 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin) {
 
 };
 
+float TricolorLED::_bright_scale(int value) {
+  /*
+    Scales brightness values from integer to percentage
+  */
+  return(value / 255.0);
+}
+
 void TricolorLED::change_brightness(int percent) {
   /*
     Changes brightness by a specified integer percentage.
@@ -39,7 +46,7 @@ void TricolorLED::change_brightness(int percent) {
   // Update color and brightness
   set_color(red, green, blue, bright);
 
-}
+};
 
 void TricolorLED::power_off() {
   /*
@@ -51,7 +58,7 @@ void TricolorLED::power_off() {
   analogWrite(_blue_pin, _rgb_scale(0));
 
   state = "OFF";
-}
+};
 
 void TricolorLED::power_on() {
   /*
@@ -63,7 +70,7 @@ void TricolorLED::power_on() {
   analogWrite(_blue_pin, _rgb_scale(blue));
 
   state = "ON";
-}
+};
 
 void TricolorLED::print_state() {
   /*
@@ -81,7 +88,7 @@ void TricolorLED::print_state() {
   Serial.println(bright);
   Serial.println("---------------------------\n");
 
-}
+};
 
 int TricolorLED::_rgb_scale(int value) {
   /*
@@ -105,10 +112,10 @@ void TricolorLED::set_color(int r, int g, int b, int br) {
   bright = br;
 
   // Change RGB colors using rgb scale
-  analogWrite(_red_pin, _rgb_scale(red));
-  analogWrite(_green_pin, _rgb_scale(green));
-  analogWrite(_blue_pin, _rgb_scale(blue));
+  analogWrite(_red_pin, _rgb_scale(red) * _bright_scale(bright));
+  analogWrite(_green_pin, _rgb_scale(green) * _bright_scale(bright));
+  analogWrite(_blue_pin, _rgb_scale(blue) * _bright_scale(bright));
 
   print_state();
 
-}
+};
