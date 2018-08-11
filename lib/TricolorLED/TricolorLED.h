@@ -15,7 +15,7 @@ class TricolorLED {
     void power_off();
     void power_on();
     void print_state();
-    void set_color(int red, int green, int blue, float bright);
+    void set_color(int r, int g, int b, int br);
 
     int red;
     int green;

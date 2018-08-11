@@ -103,7 +103,7 @@ int TricolorLED::_rgb_scale(int value) {
   );
 };
 
-void TricolorLED::set_color(int red, int green, int blue, float bright) {
+void TricolorLED::set_color(int r, int g, int b, float br) {
   /*
     Sets RGB LED colors using 0 - 255 integer scale for each color channel
     and a 0 - 1 float scale for brightness.
@@ -119,5 +119,7 @@ void TricolorLED::set_color(int red, int green, int blue, float bright) {
   green = green;
   blue = blue;
   bright = bright;
+
+  print_state();
 
 }
