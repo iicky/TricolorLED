@@ -23,32 +23,21 @@ void TricolorLED::change_brightness(int percent) {
   /*
     Changes brightness by a specified integer percentage.
   */
-  float change = percent / 100.0;
 
-  // Increase brightness
-  if (percent > 0) {
-    if (bright + change > 1) {
-      bright = 1;
-    } else {
-      bright += change;
-    }
+  // Scale percent change to 255
+  float change = (percent / 100.0) * 255;
+
+  // Change brightness
+  if (bright + change > 255) {
+    bright = 255;
+  } else if (bright + change < 0){
+    bright = 0;
+  } else {
+    bright = (int)(bright + change);
   }
 
-  // Decrease brightness
-  else if(percent < 0) {
-    if (bright - change < 0) {
-      bright = 0;
-    } else {
-      bright -= change;
-    }
-  }
-
-  set_color(
-    red,
-    green,
-    blue,
-    bright
-  );
+  // Update color and brightness
+  set_color(red, green, blue, bright);
 
 }
 
