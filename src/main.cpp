@@ -169,6 +169,7 @@ void remote_set() {
     case 0xFFF807:
       Serial.println("Time");
       rgb_led.effect = "solid";
+      rgb_led.power_on();
       update_state();
       break;
     case 0xFFB04F:
