@@ -69,12 +69,13 @@ void TricolorLED::power_on() {
   /*
     Powers on LEDs using previous color attributes.
   */
+  state = "ON";
   bright = 255;
+
   analogWrite(_red_pin, _rgb_scale(red));
   analogWrite(_green_pin, _rgb_scale(green));
   analogWrite(_blue_pin, _rgb_scale(blue));
 
-  state = "ON";
 };
 
 void TricolorLED::print_state() {
@@ -117,13 +118,14 @@ void TricolorLED::refresh() {
     _time = millis();
 
     // Fade effect
+    // Brightness sweeps from full to almost off
     if(effect == "fade") {
 
       if((bright + 5 * _direction) > 255) {
         bright = 255;
         _direction = _direction * -1;
-      } else if((bright + 5 * _direction) < 0) {
-        bright = 0;
+      } else if((bright + 5 * _direction) < 10) {
+        bright = 10;
         _direction = _direction * -1;
       } else {
         bright = bright + 5 * _direction;
