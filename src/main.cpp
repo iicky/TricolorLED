@@ -168,7 +168,7 @@ void remote_set() {
       break;
     case 0xFFF807:
       Serial.println("Time");
-      rgb_led.effect = "normal";
+      rgb_led.effect = "solid";
       update_state();
       break;
     case 0xFFB04F:
