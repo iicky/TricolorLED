@@ -45,7 +45,7 @@ class TricolorLED {
 
     // Effects
     int _direction = 1;
-
+    int _toggle = 0;
 };
 
 #endif
