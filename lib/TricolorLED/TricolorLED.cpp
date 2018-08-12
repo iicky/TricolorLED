@@ -116,6 +116,10 @@ void TricolorLED::refresh() {
     // Reset timer
     _time = millis();
 
+    if(effect == "normal") {
+      bright = 255;
+    }
+
     // Fade effect
     if(effect == "fade") {
 
@@ -131,6 +135,7 @@ void TricolorLED::refresh() {
 
     }
 
+    // Update LED
     set_color(red, green, blue, bright);
 
   }
