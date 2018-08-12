@@ -98,6 +98,9 @@ void loop() {
   // Check MQTT
   client.loop();
 
+  // Refresh LED
+  rgb_led.refresh();
+  
 }
 
 void wifi_setup() {

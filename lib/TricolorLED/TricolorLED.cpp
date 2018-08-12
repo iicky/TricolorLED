@@ -105,6 +105,19 @@ int TricolorLED::_rgb_scale(int value) {
   );
 };
 
+void TricolorLED::refresh() {
+  /*
+    Refreshes light effect based on time to avoid holding up loop cycle.
+  */
+  if((millis() - _time) > _delay) {
+
+    // Reset timer
+    _time = millis();
+
+
+  }
+}
+
 void TricolorLED::set_color(int r, int g, int b, int br) {
   /*
     Sets RGB LED colors using 0 - 255 integer scale for each color channel
