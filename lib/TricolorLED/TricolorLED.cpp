@@ -111,14 +111,10 @@ void TricolorLED::refresh() {
   /*
     Refreshes light effect based on time to avoid holding up loop cycle.
   */
-  if((millis() - _time) > _delay) {
+  if( ((millis() - _time) > _delay) && (state == "ON") ) {
 
     // Reset timer
     _time = millis();
-
-    if(effect == "normal") {
-      bright = 255;
-    }
 
     // Fade effect
     if(effect == "fade") {
