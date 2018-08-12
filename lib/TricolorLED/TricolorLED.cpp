@@ -114,6 +114,22 @@ void TricolorLED::refresh() {
     // Reset timer
     _time = millis();
 
+    // Fade effect
+    if(effect == "fade") {
+
+      if((bright + 5 * _direction) > 255) {
+        bright = 255;
+        _direction = _direction * -1;
+      } else if((bright + 5 * _direction) < 0) {
+        bright = 0;
+        _direction = _direction * -1;
+      } else {
+        bright = bright + 5 * _direction;
+      }
+
+    }
+
+    set_color(red, green, blue, bright);
 
   }
 }

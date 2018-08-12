@@ -100,7 +100,7 @@ void loop() {
 
   // Refresh LED
   rgb_led.refresh();
-  
+
 }
 
 void wifi_setup() {
@@ -263,6 +263,7 @@ void remote_set() {
       break;
     case 0xFF58A7:
       Serial.println("Fade");
+      rgb_led.effect = "fade";
       update_state();
       break;
 

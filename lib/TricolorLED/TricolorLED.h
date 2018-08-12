@@ -42,7 +42,10 @@ class TricolorLED {
     // Time and delay in milliseconds
     int _delay = 30;
     int _time;
-    
+
+    // Effects
+    int _direction = 1;
+
 };
 
 #endif
