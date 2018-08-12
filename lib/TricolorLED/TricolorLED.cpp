@@ -69,7 +69,7 @@ void TricolorLED::power_on() {
   /*
     Powers on LEDs using previous color attributes.
   */
-
+  bright = 255;
   analogWrite(_red_pin, _rgb_scale(red));
   analogWrite(_green_pin, _rgb_scale(green));
   analogWrite(_blue_pin, _rgb_scale(blue));
