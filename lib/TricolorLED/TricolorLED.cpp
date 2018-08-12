@@ -83,6 +83,8 @@ void TricolorLED::print_state() {
   */
   Serial.print("State:\t");
   Serial.println(state);
+  Serial.print("Effect:\t");
+  Serial.println(effect);
   Serial.print("R:\t");
   Serial.println(red);
   Serial.print("G:\t");
