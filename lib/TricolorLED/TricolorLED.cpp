@@ -153,8 +153,6 @@ void TricolorLED::set_color(int r, int g, int b, int br) {
   analogWrite(_green_pin, _rgb_scale(green) * _bright_scale(bright));
   analogWrite(_blue_pin, _rgb_scale(blue) * _bright_scale(bright));
 
-  print_state();
-
 };
 
 const uint8_t PROGMEM TricolorLED::_gammaTable[256] = {
