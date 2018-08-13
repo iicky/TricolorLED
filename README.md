@@ -9,6 +9,8 @@ I am still working on transferring the code from the Arduino IDE to PlatformIO. 
 
 <img src="https://github.com/iicky/TricolorLED/blob/master/image/breadboard.png?raw=true" width="500">
 
-### Fairy Lights Photo
+### Fairy Lights
+
+[LED Fairy Lights](https://amzn.to/2KP4HIm)
 
 <img src="https://github.com/iicky/TricolorLED/blob/master/image/fairy_lights.jpg?raw=true" width="500">
