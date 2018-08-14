@@ -23,6 +23,7 @@ framework = arduino
 upload_port = <YOUR_DEVICE_IP_ADDRESS>
 upload_flags = --auth=<YOUR_OTA_PASS>
 build_flags =
+  '-D DEVICE="<YOUR_DEVICE_NAME>"'
   '-D WIFI_SSID="<YOUR_WIFI_SSID>"'
   '-D WIFI_PASS="<YOUR_WIFI_PASS>"'
   '-D OTA_PASS="<YOUR_OTA_PASS>"'
