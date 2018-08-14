@@ -1,4 +1,5 @@
 ; PlatformIO Project Configuration File
+; -------------------------------------------------------------------------
 ;
 ;   Build options: build flags, source filter
 ;   Upload options: custom upload port, speed and extra flags
@@ -8,13 +9,31 @@
 ; Please visit documentation for the other options and examples
 ; http://docs.platformio.org/page/projectconf.html
 
-
-
 ; Configuration Instructions
+; -------------------------------------------------------------------------
 ;
 ; All #define statements are included using the build flags below.
 ; Please rename each <YOUR_XXXX> with your name, then rename
 ; this file to platform.ini before building with PlatformIO.
+
+; Build Flag Descriptions
+; -------------------------------------------------------------------------
+;
+; DEVICE_NAME
+; The hostname of your device for OTA updates.
+;
+; WIFI_SSID, WIFI_PASS
+; The SSID and password required to connect the ESP8266 to your WiFi network.
+;
+; OTA_PASS
+; The password required for OTA authentication when uploading firmware.
+;
+; MQTT_SERVER, MQTT PORT, MQTT_USER, MQTT_PASS
+; MQTT server name and port with login information.
+;
+; MQTT_TOPIC
+; The topic to which the lights will be subcribed for updates.
+; e.g. 'lights/fairy_lights'
 
 [env:d1_mini_lite]
 platform = espressif8266
