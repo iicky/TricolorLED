@@ -60,9 +60,9 @@ void TricolorLED::power_off() {
     Powers off LEDs without overwriting color attributes.
   */
 
-  analogWrite(_red_pin, _rgb_scale(0));
-  analogWrite(_green_pin, _rgb_scale(0));
-  analogWrite(_blue_pin, _rgb_scale(0));
+  analogWrite(_red_pin, abs(_ac_mod - _rgb_scale(0)));
+  analogWrite(_green_pin, abs(_ac_mod - _rgb_scale(0)));
+  analogWrite(_blue_pin, abs(_ac_mod - _rgb_scale(0)));
 
   state = "OFF";
 };
