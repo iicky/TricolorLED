@@ -20,9 +20,9 @@
 
 // Pins
 // --------------------------------------------------
-#define RED_PIN       D1
-#define GREEN_PIN     D5
-#define BLUE_PIN      D8
+#define RED_PIN       D5
+#define GREEN_PIN     D3
+#define BLUE_PIN      D1
 #define IR_PIN        D4
 
 // JSON
@@ -44,7 +44,7 @@ PubSubClient client(espClient);
 IRrecv irrecv(IR_PIN);
 decode_results results;
 
-TricolorLED rgb_led(RED_PIN, GREEN_PIN, BLUE_PIN);
+TricolorLED rgb_led(RED_PIN, GREEN_PIN, BLUE_PIN, COMMON_ANODE);
 
 void setup() {
 

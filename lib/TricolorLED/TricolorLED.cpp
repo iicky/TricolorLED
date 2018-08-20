@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include <TricolorLED.h>
 
-TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin) {
+TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int common_anode) {
 
   _red_pin = red_pin;
   _green_pin = green_pin;
@@ -14,6 +14,8 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin) {
   pinMode(_red_pin, OUTPUT);
   pinMode(_green_pin, OUTPUT);
   pinMode(_blue_pin, OUTPUT);
+
+  _ac_mod = (int)common_anode * 1023;
 
   state = "ON";
   effect = "solid";
@@ -160,9 +162,18 @@ void TricolorLED::set_color(int r, int g, int b, int br) {
   bright = br;
 
   // Change RGB colors using rgb scale
-  analogWrite(_red_pin, _rgb_scale(red) * _bright_scale(bright));
-  analogWrite(_green_pin, _rgb_scale(green) * _bright_scale(bright));
-  analogWrite(_blue_pin, _rgb_scale(blue) * _bright_scale(bright));
+  analogWrite(
+    _red_pin,
+    abs(_ac_mod - (_rgb_scale(red) * _bright_scale(bright)))
+  );
+  analogWrite(
+    _green_pin,
+    abs(_ac_mod - (_rgb_scale(green) * _bright_scale(bright)))
+  );
+  analogWrite(
+    _blue_pin,
+    abs(_ac_mod - (_rgb_scale(blue) * _bright_scale(bright)))
+  );
 
 };
 
