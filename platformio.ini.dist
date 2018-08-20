@@ -22,6 +22,9 @@
 ; DEVICE_NAME
 ; The hostname of your device for OTA updates.
 ;
+; COMMON_ANODE
+; Indicates whether LED has a common anode (1) or cathode (0).
+;
 ; WIFI_SSID, WIFI_PASS
 ; The SSID and password required to connect the ESP8266 to your WiFi network.
 ;
@@ -43,6 +46,7 @@ upload_port = <YOUR_DEVICE_IP_ADDRESS>
 upload_flags = --auth=<YOUR_OTA_PASS>
 build_flags =
   '-D DEVICE="<YOUR_DEVICE_NAME>"'
+  '-D COMMON_ANODE=1'
   '-D WIFI_SSID="<YOUR_WIFI_SSID>"'
   '-D WIFI_PASS="<YOUR_WIFI_PASS>"'
   '-D OTA_PASS="<YOUR_OTA_PASS>"'
