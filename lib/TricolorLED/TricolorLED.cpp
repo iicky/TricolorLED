@@ -112,7 +112,7 @@ void TricolorLED::refresh() {
   /*
     Refreshes light effect based on time to avoid holding up loop cycle.
   */
-  if( ((millis() - _time) > _delay) && (state == "ON") ) {
+  if( ((int)(millis() - _time) > _delay) && (state == "ON") ) {
 
     // Reset timer
     _time = millis();
@@ -132,6 +132,14 @@ void TricolorLED::refresh() {
       }
 
     }
+
+    // Flash effect
+    // Brightness alternates between full on and full of on a cycle
+    //if(effect == "flash") {
+
+    //  if(_toggle == )
+
+    //}
 
     // Update LED
     set_color(red, green, blue, bright);
