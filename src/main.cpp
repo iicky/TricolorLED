@@ -23,7 +23,7 @@
 void wifi_setup();
 void ota_setup();
 void remote_set();
-void reconnect();
+void mqtt_reconnect();
 void callback(char* topic, byte* payload, unsigned int length);
 bool set_state(char *message);
 void update_state();
@@ -45,6 +45,9 @@ decode_results results;
 // LED config
 TricolorLED rgb_led(RED_PIN, GREEN_PIN, BLUE_PIN, COMMON_ANODE);
 
+// Boot flag
+int FIRST_RUN = 0;
+
 void setup() {
 
   // Serial setup
@@ -65,17 +68,13 @@ void setup() {
   client.setServer(MQTT_SERVER, MQTT_PORT);
   client.setCallback(callback);
 
-  // Set initial color and state
-  rgb_led.state = "ON";
-  rgb_led.set_color(255, 255, 255, 255);
-
 }
 
 void loop() {
 
   // Reconnect to MQTT if disconnected
   if (!client.connected()) {
-    reconnect();
+    mqtt_reconnect();
   }
 
   // Reconnect to WiFi if diconnected
@@ -292,16 +291,19 @@ void remote_set() {
 
 }
 
-void reconnect() {
+void mqtt_reconnect() {
 
   // Loop until we're reconnected
   while (!client.connected()) {
 
     // Attempt to connect
-    if (client.connect(DEVICE, MQTT_USER, MQTT_PASS)) {
+    if (client.connect(DEVICE, MQTT_USER, MQTT_PASS,
+          MQTT_TOPIC "/status", 2, 1, "offline", false)) {
 
-      // Subscribe to topic
+      // Resubscribe
+      client.subscribe(MQTT_TOPIC);
       client.subscribe(MQTT_TOPIC "/set");
+      client.publish(MQTT_TOPIC "/status", "online", true);
 
       // Update state
       update_state();
@@ -329,8 +331,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
     return;
 
   // Update LED state
-  update_state();
-
+  if(strcmp(topic, MQTT_TOPIC "/set") == 0) {
+    update_state();
+  } else if (strcmp(topic, MQTT_TOPIC) == 0 && FIRST_RUN == 0) {
+    update_state();
+    FIRST_RUN = 1;
+  }
 }
 
 bool set_state(char *message) {
