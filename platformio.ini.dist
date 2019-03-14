@@ -25,6 +25,9 @@
 ; COMMON_ANODE
 ; Indicates whether LED has a common anode (1) or cathode (0).
 ;
+; RED_PIN, BLUE_PIN, GREEN_PIN, IR_PIN
+; The board pin locations of the red, green, and blue LED pins and IR data pin.
+;
 ; WIFI_SSID, WIFI_PASS
 ; The SSID and password required to connect the ESP8266 to your WiFi network.
 ;
@@ -47,6 +50,10 @@ upload_flags = --auth=<YOUR_OTA_PASS>
 build_flags =
   '-D DEVICE="<YOUR_DEVICE_NAME>"'
   '-D COMMON_ANODE=1'
+  '-D RED_PIN=XX'
+  '-D GREEN_PIN=XX'
+  '-D BLUE_PIN=XX'
+  '-D IR_PIN=XX'
   '-D WIFI_SSID="<YOUR_WIFI_SSID>"'
   '-D WIFI_PASS="<YOUR_WIFI_PASS>"'
   '-D OTA_PASS="<YOUR_OTA_PASS>"'

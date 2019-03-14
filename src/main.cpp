@@ -18,17 +18,6 @@
 // --------------------------------------------------
 #include <TricolorLED.h>
 
-// Pins
-// --------------------------------------------------
-#define RED_PIN       D5
-#define GREEN_PIN     D3
-#define BLUE_PIN      D1
-#define IR_PIN        D4
-
-// JSON
-// --------------------------------------------------
-const int BUFFER_SIZE = JSON_OBJECT_SIZE(10);
-
 // Prototypes
 // --------------------------------------------------
 void wifi_setup();
@@ -39,11 +28,21 @@ void callback(char* topic, byte* payload, unsigned int length);
 bool set_state(char *message);
 void update_state();
 
+// Global variables
+// --------------------------------------------------
+
+// JSON buffer size
+const int BUFFER_SIZE = JSON_OBJECT_SIZE(10);
+
+// WiFi and MQTT setup
 WiFiClient espClient;
 PubSubClient client(espClient);
+
+// IR Setup
 IRrecv irrecv(IR_PIN);
 decode_results results;
 
+// LED config
 TricolorLED rgb_led(RED_PIN, GREEN_PIN, BLUE_PIN, COMMON_ANODE);
 
 void setup() {
@@ -320,7 +319,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   // Process message
   char message[length + 1];
-  for (int i = 0; i < length; i++) {
+  for (unsigned int i = 0; i < length; i++) {
     message[i] = (char)payload[i];
   }
   message[length] = '\0';
