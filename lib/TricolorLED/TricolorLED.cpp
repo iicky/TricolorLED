@@ -20,11 +20,11 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range
 
   _ac_mod = (int)common_anode * _pwm_range;
 
-  state = "ON";
+  state = "OFF";
   effect = "solid";
-  red = 255;
-  green = 255;
-  blue = 255;
+  red = 0;
+  green = 0;
+  blue = 0;
 
   // Sync brightness with _pwm_bright
   bright = (int)((float)_pwm_bright / _pwm_range * 255.0);
