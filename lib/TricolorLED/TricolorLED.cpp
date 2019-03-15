@@ -57,9 +57,6 @@ void TricolorLED::change_brightness(int percent) {
 
   // Keep brightness in sync
   bright = (int)((float)_pwm_bright / _pwm_range * 255.0);
-  Serial.println(change);
-  Serial.println(_pwm_bright);
-  Serial.println(bright);
 
 };
 
@@ -118,15 +115,6 @@ void TricolorLED::_set() {
   int _scaled_red = _rgb_scale(red) * _scaled_bright;
   int _scaled_green = _rgb_scale(green) * _scaled_bright;
   int _scaled_blue = _rgb_scale(blue) * _scaled_bright;
-
-  Serial.print("Red: ");
-  Serial.println(_scaled_red);
-  Serial.print("Green: ");
-  Serial.println(_scaled_green);
-  Serial.print("Blue: ");
-  Serial.println(_scaled_blue);
-  Serial.print("Scaled Bright: ");
-  Serial.println(_scaled_bright);
 
   // Change RGB colors using rgb scale
   analogWrite(_red_pin, abs(_ac_mod - _scaled_red));
