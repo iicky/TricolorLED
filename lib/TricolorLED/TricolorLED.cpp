@@ -60,6 +60,18 @@ void TricolorLED::change_brightness(int percent) {
 
 };
 
+void TricolorLED::hsv(int h, int s, int v) {
+  /*
+    Sets HSV values, converts and mirrors corresponding RGB values.
+  */
+
+  // Set HSV values
+  hue = h;
+  saturation = s;
+  value = v;
+
+}
+
 void TricolorLED::off() {
   /*
     Powers off LEDs without overwriting color attributes.
@@ -80,6 +92,9 @@ void TricolorLED::on() {
 };
 
 void TricolorLED::rgb(int r, int g, int b) {
+  /*
+    Sets RGB values, converts and mirrors corresponding HSV values.
+  */
 
   // Set RGB values
   red = r;

@@ -12,10 +12,11 @@ class TricolorLED {
 
     TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range, int common_anode);
     void change_brightness(int percent);
+    void hsv(int h, int s, int v);
     void off();
     void on();
     void refresh();
-    void rgb(int red, int green, int blue);
+    void rgb(int r, int g, int b);
     void set_brightness(int value);
 
     int red;
