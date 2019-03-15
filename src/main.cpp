@@ -43,7 +43,7 @@ IRrecv irrecv(IR_PIN);
 decode_results results;
 
 // LED config
-TricolorLED rgb_led(RED_PIN, GREEN_PIN, BLUE_PIN, COMMON_ANODE);
+TricolorLED rgb_led(RED_PIN, GREEN_PIN, BLUE_PIN, PWM_RANGE, COMMON_ANODE);
 
 // Boot flag
 int FIRST_RUN = 0;
@@ -167,15 +167,15 @@ void remote_set() {
     case 0xFFF807:
       Serial.println("Time");
       rgb_led.effect = "solid";
-      rgb_led.power_on();
+      rgb_led.on();
       update_state();
       break;
     case 0xFFB04F:
       Serial.println("Power");
       if (rgb_led.state == "ON") {
-        rgb_led.power_off();
+        rgb_led.off();
       } else {
-        rgb_led.power_on();
+        rgb_led.on();
       }
       rgb_led.print_state();
       update_state();
@@ -355,10 +355,10 @@ bool set_state(char *message) {
   if (root.containsKey("state")) {
     if (root["state"] == "ON") {
       if (rgb_led.state != "ON")
-        rgb_led.power_on();
+        rgb_led.on();
     }
     else if (root["state"] == "OFF") {
-      rgb_led.power_off();
+      rgb_led.off();
     }
     else {
       update_state();

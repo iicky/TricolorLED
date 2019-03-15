@@ -25,6 +25,9 @@
 ; COMMON_ANODE
 ; Indicates whether LED has a common anode (1) or cathode (0).
 ;
+; PWM_RANGE
+; The PWM range of the pins as an integer. 256 for Arudino, 1024 for ESP8266.
+;
 ; RED_PIN, BLUE_PIN, GREEN_PIN, IR_PIN
 ; The board pin locations of the red, green, and blue LED pins and IR data pin.
 ;
@@ -50,6 +53,7 @@ upload_flags = --auth=<YOUR_OTA_PASS>
 build_flags =
   '-D DEVICE="<YOUR_DEVICE_NAME>"'
   '-D COMMON_ANODE=1'
+  '-D PWM_RANGE=1024'
   '-D RED_PIN=XX'
   '-D GREEN_PIN=XX'
   '-D BLUE_PIN=XX'

@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include <TricolorLED.h>
 
-TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int common_anode) {
+TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range, int common_anode) {
 
   _red_pin = red_pin;
   _green_pin = green_pin;
@@ -15,6 +15,7 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int common_an
   pinMode(_green_pin, OUTPUT);
   pinMode(_blue_pin, OUTPUT);
 
+  _pwm_range = pwm_range;
   _ac_mod = (int)common_anode * 1023;
 
   state = "ON";
@@ -55,19 +56,20 @@ void TricolorLED::change_brightness(int percent) {
 
 };
 
-void TricolorLED::power_off() {
+void TricolorLED::off() {
   /*
     Powers off LEDs without overwriting color attributes.
   */
+
+  state = "OFF";
 
   analogWrite(_red_pin, abs(_ac_mod - _rgb_scale(0)));
   analogWrite(_green_pin, abs(_ac_mod - _rgb_scale(0)));
   analogWrite(_blue_pin, abs(_ac_mod - _rgb_scale(0)));
 
-  state = "OFF";
 };
 
-void TricolorLED::power_on() {
+void TricolorLED::on() {
   /*
     Powers on LEDs using previous color attributes.
   */
@@ -164,11 +166,11 @@ void TricolorLED::set_color(int r, int g, int b, int br) {
   // Change RGB colors using rgb scale
   analogWrite(
     _red_pin,
-    abs(_ac_mod - (_rgb_scale(red) * _bright_scale(bright)))
+    std::abs(_ac_mod - (_rgb_scale(red) * _bright_scale(bright)))
   );
   analogWrite(
     _green_pin,
-    abs(_ac_mod - (_rgb_scale(green) * _bright_scale(bright)))
+    std::abs(_ac_mod - (_rgb_scale(green) * _bright_scale(bright)))
   );
   analogWrite(
     _blue_pin,

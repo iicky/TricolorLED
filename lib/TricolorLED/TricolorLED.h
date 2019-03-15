@@ -10,10 +10,10 @@ class TricolorLED {
 
   public:
 
-    TricolorLED(int red_pin, int green_pin, int blue_pin, int common_anode);
+    TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range, int common_anode);
     void change_brightness(int percent);
-    void power_off();
-    void power_on();
+    void off();
+    void on();
     void print_state();
     void refresh();
     void set_color(int r, int g, int b, int br);
@@ -38,6 +38,9 @@ class TricolorLED {
     int _red_pin;
     int _green_pin;
     int _blue_pin;
+
+    // PWM range
+    int _pwm_range;
 
     // Common Anode/Cathode modifier
     int _ac_mod;
