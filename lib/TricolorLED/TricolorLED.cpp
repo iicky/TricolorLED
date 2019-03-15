@@ -174,7 +174,7 @@ void TricolorLED::set_color(int r, int g, int b, int br) {
   );
   analogWrite(
     _blue_pin,
-    abs(_ac_mod - (_rgb_scale(blue) * _bright_scale(bright)))
+    std::abs(_ac_mod - (_rgb_scale(blue) * _bright_scale(bright)))
   );
 
 };
