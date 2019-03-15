@@ -16,7 +16,7 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range
   pinMode(_blue_pin, OUTPUT);
 
   _pwm_range = pwm_range;
-  _ac_mod = (int)common_anode * 1023;
+  _ac_mod = (int)common_anode * _pwm_range;
 
   state = "ON";
   effect = "solid";
