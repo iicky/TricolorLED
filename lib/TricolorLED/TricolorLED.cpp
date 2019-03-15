@@ -79,6 +79,15 @@ void TricolorLED::on() {
   state = "ON";
 };
 
+void TricolorLED::rgb(int r, int g, int b) {
+
+  // Set RGB values
+  red = r;
+  green = g;
+  blue = b;
+
+}
+
 int TricolorLED::_rgb_scale(int value) {
   /*
     Scales RGB values from 255 to PWM_RANGE and
@@ -120,6 +129,28 @@ void TricolorLED::_set() {
   analogWrite(_red_pin, abs(_ac_mod - _scaled_red));
   analogWrite(_green_pin, abs(_ac_mod - _scaled_green));
   analogWrite( _blue_pin, abs(_ac_mod - _scaled_blue));
+
+};
+
+void TricolorLED::set_brightness(int value) {
+  /*
+    Changes brightness to a specified integer of 0 - 255.
+  */
+
+  // Scale value change to PWM range
+  float change = (value / 255.0) * _pwm_range;
+
+  // Change brightness
+  if (change > _pwm_range) {
+    _pwm_bright = _pwm_range;
+  } else if (change < 0){
+    _pwm_bright = 0;
+  } else {
+    _pwm_bright = (int)(change);
+  }
+
+  // Keep brightness in sync
+  bright = (int)((float)_pwm_bright / _pwm_range * 255.0);
 
 };
 

@@ -15,6 +15,8 @@ class TricolorLED {
     void off();
     void on();
     void refresh();
+    void rgb(int red, int green, int blue);
+    void set_brightness(int value);
 
     int red;
     int green;

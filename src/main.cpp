@@ -181,108 +181,108 @@ void remote_set() {
     // Remote Row: 2
     case 0xFF9867:
       Serial.println("Red");
-      //rgb_led.set_color(255, 0, 0);
-      //update_state();
+      rgb_led.rgb(255, 0, 0);
+      update_state();
       break;
     case 0xFFD827:
       Serial.println("Green");
-      //rgb_led.set_color(0, 128, 0, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(0, 128, 0);
+      update_state();
       break;
     case 0xFF8877:
       Serial.println("Navy");
-      //rgb_led.set_color(0, 0, 128, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(0, 0, 128);
+      update_state();
       break;
     case 0xFFA857:
       Serial.println("White");
-      //rgb_led.set_color(255, 255, 255, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(255, 255, 255);
+      update_state();
       break;
 
     // Remote Row: 3
     case 0xFFE817:
       Serial.println("Orange");
-      //rgb_led.set_color(255, 69, 0, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(255, 69, 0);
+      update_state();
       break;
     case 0xFF48B7:
       Serial.println("Lime Green");
-      //rgb_led.set_color(50, 205, 50, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(50, 205, 50);
+      update_state();
       break;
     case 0xFF6897:
       Serial.println("Blue");
-      //rgb_led.set_color(0, 0, 255, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(0, 0, 255);
+      update_state();
       break;
     case 0xFFB24D:
       Serial.println("Flash");
-      //update_state();
+      update_state();
       break;
 
     // Remote Row: 4
     case 0xFF02FD:
       Serial.println("Golden Rod");
-      //rgb_led.set_color(218, 165, 32, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(218, 165, 32);
+      update_state();
       break;
     case 0xFF32CD:
       Serial.println("Lime");
-      //rgb_led.set_color(0, 255, 0, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(0, 255, 0);
+      update_state();
       break;
     case 0xFF20DF:
       Serial.println("Purple");
-      //rgb_led.set_color(128, 0, 128, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(128, 0, 128);
+      update_state();
       break;
     case 0xFF00FF:
       Serial.println("Strobe");
-      //update_state();
+      update_state();
       break;
 
     // Remote Row: 5
     case 0xFF50AF:
       Serial.println("Yellow");
-      //rgb_led.set_color(255, 160, 0, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(255, 160, 0);
+      update_state();
       break;
     case 0xFF7887:
       Serial.println("Teal");
-      //rgb_led.set_color(0, 128, 128, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(0, 128, 128);
+      update_state();
       break;
     case 0xFF708F:
       Serial.println("Dodger Blue");
-      //rgb_led.set_color(30, 144, 255, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(30, 144, 255);
+      update_state();
       break;
     case 0xFF58A7:
       Serial.println("Fade");
-      //rgb_led.effect = "fade";
-      //update_state();
+      rgb_led.effect = "fade";
+      update_state();
       break;
 
     // Remote Row: 6
     case 0xFF38C7:
       Serial.println("Yellow Green");
-      //rgb_led.set_color(154, 205, 50, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(154, 205, 50);
+      update_state();
       break;
     case 0xFF28D7:
       Serial.println("Sky Blue");
-      //rgb_led.set_color(135, 206, 235, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(135, 206, 235);
+      update_state();
       break;
     case 0xFFF00F:
       Serial.println("Blue Violet");
-      //rgb_led.set_color(138, 43, 226, rgb_led.bright);
-      //update_state();
+      rgb_led.rgb(138, 43, 226);
+      update_state();
       break;
     case 0xFF30CF:
       Serial.println("Smooth");
-      //update_state();
+      update_state();
       break;
   }
 
@@ -368,13 +368,13 @@ bool set_state(char *message) {
     int r = root["color"]["r"];
     int g = root["color"]["g"];
     int b = root["color"]["b"];
-    //rgb_led.set_color(r, g, b, rgb_led.bright);
+    rgb_led.rgb(r, g, b);
   }
 
   // Parse brightness state
   if (root.containsKey("brightness")) {
     int br = root["brightness"];
-    //rgb_led.set_color(rgb_led.red, rgb_led.green, rgb_led.blue, br);
+    rgb_led.set_brightness(br);
   }
 
   // Set effect state
