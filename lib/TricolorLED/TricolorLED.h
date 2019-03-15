@@ -55,7 +55,7 @@ class TricolorLED {
     int _ac_mod;
 
     // Time and delay in milliseconds
-    int _delay = 1000;
+    int _delay = 10;
     int _time;
 
     // Effects
