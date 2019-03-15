@@ -154,13 +154,13 @@ void remote_set() {
     // Remote Row: 1
     case 0xFF906F:
       Serial.println("Brightness Up");
-      //rgb_led.change_brightness(5);
-      //update_state();
+      rgb_led.change_brightness(5);
+      update_state();
       break;
     case 0xFFB847:
       Serial.println("Brightness Down");
-      //rgb_led.change_brightness(-5);
-      //update_state();
+      rgb_led.change_brightness(-5);
+      update_state();
       break;
     case 0xFFF807:
       Serial.println("Time");

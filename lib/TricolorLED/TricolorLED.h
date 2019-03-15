@@ -11,6 +11,7 @@ class TricolorLED {
   public:
 
     TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range, int common_anode);
+    void change_brightness(int percent);
     void off();
     void on();
     void refresh();
@@ -43,14 +44,15 @@ class TricolorLED {
     int _green_pin;
     int _blue_pin;
 
-    // PWM range
+    // PWM range and brightness
     int _pwm_range;
+    int _pwm_bright;
 
     // Common Anode/Cathode modifier
     int _ac_mod;
 
     // Time and delay in milliseconds
-    int _delay = 30;
+    int _delay = 1000;
     int _time;
 
     // Effects

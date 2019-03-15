@@ -16,6 +16,8 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range
   pinMode(_blue_pin, OUTPUT);
 
   _pwm_range = pwm_range;
+  _pwm_bright = pwm_range;
+
   _ac_mod = (int)common_anode * _pwm_range;
 
   state = "ON";
@@ -23,7 +25,9 @@ TricolorLED::TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range
   red = 255;
   green = 255;
   blue = 255;
-  bright = 255;
+
+  // Sync brightness with _pwm_bright
+  bright = (int)((float)_pwm_bright / _pwm_range * 255.0);
 
 };
 
@@ -33,6 +37,31 @@ float TricolorLED::_bright_scale(int value) {
   */
   return(value / 255.0);
 }
+
+void TricolorLED::change_brightness(int percent) {
+  /*
+    Changes brightness by a specified integer percentage.
+  */
+
+  // Scale percent change to PWM range
+  float change = (percent / 100.0) * _pwm_range;
+
+  // Change brightness
+  if (_pwm_bright + change > _pwm_range) {
+    _pwm_bright = _pwm_range;
+  } else if (_pwm_bright + change < 0){
+    _pwm_bright = 0;
+  } else {
+    _pwm_bright = (int)(_pwm_bright + change);
+  }
+
+  // Keep brightness in sync
+  bright = (int)((float)_pwm_bright / _pwm_range * 255.0);
+  Serial.println(change);
+  Serial.println(_pwm_bright);
+  Serial.println(bright);
+
+};
 
 void TricolorLED::off() {
   /*
@@ -69,7 +98,6 @@ void TricolorLED::refresh() {
   */
   if( ((int)(millis() - _time) > _delay) && (state == "ON") ) {
 
-     Serial.println("running");
     // Reset timer
     _time = millis();
 
@@ -84,12 +112,21 @@ void TricolorLED::_set() {
   */
 
   // Scale brightness
-  int _scaled_bright = _bright_scale(bright);
+  float _scaled_bright = _bright_scale(bright);
 
   // Scale RGB and dim by scaled brightness
   int _scaled_red = _rgb_scale(red) * _scaled_bright;
   int _scaled_green = _rgb_scale(green) * _scaled_bright;
   int _scaled_blue = _rgb_scale(blue) * _scaled_bright;
+
+  Serial.print("Red: ");
+  Serial.println(_scaled_red);
+  Serial.print("Green: ");
+  Serial.println(_scaled_green);
+  Serial.print("Blue: ");
+  Serial.println(_scaled_blue);
+  Serial.print("Scaled Bright: ");
+  Serial.println(_scaled_bright);
 
   // Change RGB colors using rgb scale
   analogWrite(_red_pin, abs(_ac_mod - _scaled_red));
