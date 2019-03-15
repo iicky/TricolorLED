@@ -34,38 +34,15 @@ float TricolorLED::_bright_scale(int value) {
   return(value / 255.0);
 }
 
-void TricolorLED::change_brightness(int percent) {
-  /*
-    Changes brightness by a specified integer percentage.
-  */
-
-  // Scale percent change to 255
-  float change = (percent / 100.0) * 255;
-
-  // Change brightness
-  if (bright + change > 255) {
-    bright = 255;
-  } else if (bright + change < 0){
-    bright = 0;
-  } else {
-    bright = (int)(bright + change);
-  }
-
-  // Update color and brightness
-  set_color(red, green, blue, bright);
-
-};
-
 void TricolorLED::off() {
   /*
     Powers off LEDs without overwriting color attributes.
   */
 
   state = "OFF";
-
-  analogWrite(_red_pin, abs(_ac_mod - _rgb_scale(0)));
-  analogWrite(_green_pin, abs(_ac_mod - _rgb_scale(0)));
-  analogWrite(_blue_pin, abs(_ac_mod - _rgb_scale(0)));
+  analogWrite(_red_pin, _ac_mod * _pwm_range);
+  analogWrite(_green_pin, _ac_mod * _pwm_range);
+  analogWrite(_blue_pin, _ac_mod * _pwm_range);
 
 };
 
@@ -74,41 +51,15 @@ void TricolorLED::on() {
     Powers on LEDs using previous color attributes.
   */
   state = "ON";
-  bright = 255;
-
-  analogWrite(_red_pin, _rgb_scale(red));
-  analogWrite(_green_pin, _rgb_scale(green));
-  analogWrite(_blue_pin, _rgb_scale(blue));
-
-};
-
-void TricolorLED::print_state() {
-  /*
-    Prints LED attributes to Serial monitor.
-  */
-  Serial.print("State:\t");
-  Serial.println(state);
-  Serial.print("Effect:\t");
-  Serial.println(effect);
-  Serial.print("R:\t");
-  Serial.println(red);
-  Serial.print("G:\t");
-  Serial.println(green);
-  Serial.print("B:\t");
-  Serial.println(blue);
-  Serial.print("Bright:\t");
-  Serial.println(bright);
-  Serial.println("---------------------------\n");
-
 };
 
 int TricolorLED::_rgb_scale(int value) {
   /*
-    Scales RGB values from 255 to 1023 for ESP8266 and
+    Scales RGB values from 255 to PWM_RANGE and
     apply gamma correction.
   */
   return (
-    (pgm_read_byte(&_gammaTable[value]) / 255.0) * 1023.0
+    (pgm_read_byte(&_gammaTable[value]) / 255.0) * _pwm_range
   );
 };
 
@@ -118,64 +69,32 @@ void TricolorLED::refresh() {
   */
   if( ((int)(millis() - _time) > _delay) && (state == "ON") ) {
 
+     Serial.println("running");
     // Reset timer
     _time = millis();
 
-    // Fade effect
-    // Brightness sweeps from full to almost off
-    if(effect == "fade") {
-
-      if((bright + 5 * _direction) > 255) {
-        bright = 255;
-        _direction = _direction * -1;
-      } else if((bright + 5 * _direction) < 10) {
-        bright = 10;
-        _direction = _direction * -1;
-      } else {
-        bright = bright + 5 * _direction;
-      }
-
-    }
-
-    // Flash effect
-    // Brightness alternates between full on and full of on a cycle
-    //if(effect == "flash") {
-
-    //  if(_toggle == )
-
-    //}
-
-    // Update LED
-    set_color(red, green, blue, bright);
+    _set();
 
   }
 }
 
-void TricolorLED::set_color(int r, int g, int b, int br) {
+void TricolorLED::_set() {
   /*
-    Sets RGB LED colors using 0 - 255 integer scale for each color channel
-    and brightness.
+    Writes pin values based on current values of red, green, blue, and bright.
   */
 
-  // Set LED attributes
-  red = r;
-  green = g;
-  blue = b;
-  bright = br;
+  // Scale brightness
+  int _scaled_bright = _bright_scale(bright);
+
+  // Scale RGB and dim by scaled brightness
+  int _scaled_red = _rgb_scale(red) * _scaled_bright;
+  int _scaled_green = _rgb_scale(green) * _scaled_bright;
+  int _scaled_blue = _rgb_scale(blue) * _scaled_bright;
 
   // Change RGB colors using rgb scale
-  analogWrite(
-    _red_pin,
-    std::abs(_ac_mod - (_rgb_scale(red) * _bright_scale(bright)))
-  );
-  analogWrite(
-    _green_pin,
-    std::abs(_ac_mod - (_rgb_scale(green) * _bright_scale(bright)))
-  );
-  analogWrite(
-    _blue_pin,
-    std::abs(_ac_mod - (_rgb_scale(blue) * _bright_scale(bright)))
-  );
+  analogWrite(_red_pin, abs(_ac_mod - _scaled_red));
+  analogWrite(_green_pin, abs(_ac_mod - _scaled_green));
+  analogWrite( _blue_pin, abs(_ac_mod - _scaled_blue));
 
 };
 

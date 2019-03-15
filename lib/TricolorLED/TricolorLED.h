@@ -11,21 +11,25 @@ class TricolorLED {
   public:
 
     TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range, int common_anode);
-    void change_brightness(int percent);
     void off();
     void on();
-    void print_state();
     void refresh();
-    void set_color(int r, int g, int b, int br);
 
     int red;
     int green;
     int blue;
+
+    int hue;
+    int saturation;
+    int value;
+
     int bright;
     String state;
     String effect;
 
   private:
+
+    void _set();
 
     // Scaling functions for RGB and brightness
     float _bright_scale(int value);
