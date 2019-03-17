@@ -70,17 +70,13 @@ void TricolorLED::hsv(int h, float s, float v) {
   saturation = s;
   value = v;
 
-  // Calculate RGB values
+  // Calculate intermediate values
   float hprime = h / 60.0;
   float c = v * s;
   float x = c * (1 - fabs(fmod(hprime, 2) - 1));
   float m = v - c;
 
-  Serial.print("H prime: ");
-  Serial.println(hprime);
-  Serial.print("x: ");
-  Serial.println(x);
-
+  // Calculate rgb intermediate values
   float r; float g; float b;
 
   if (!hprime) {
@@ -99,13 +95,7 @@ void TricolorLED::hsv(int h, float s, float v) {
     r = c; g = 0.0; b = x;
   }
 
-  Serial.print("r: ");
-  Serial.println(r);
-  Serial.print("g: ");
-  Serial.println(g);
-  Serial.print("b: ");
-  Serial.println(b);
-
+  // Calculate RGB and scale
   red = (int)((r + m) * 255.0);
   green = (int)((g + m) * 255.0);
   blue = (int)((b + m) * 255.0);
@@ -167,14 +157,14 @@ void TricolorLED::refresh() {
     if(effect == "smooth") {
 
       // Iterate over hue cycle
+      _hue_cycle += 1;
       if(_hue_cycle >= 360) {
-        _hue_cycle = 0;
-      } else {
-        _hue_cycle += 1;
+        _hue_cycle = 1;
       }
 
       // Set hue
       hsv(_hue_cycle, 1, 1);
+
     }
 
     // Set light pins each cycle
