@@ -386,6 +386,12 @@ bool set_state(char *message) {
     rgb_led.effect = effect;
   }
 
+  // Set delay
+  if (root.containsKey("delay")) {
+    int delay = root["delay"];
+    rgb_led.delay = delay;
+  }
+
   return true;
 
 }
@@ -408,6 +414,9 @@ void update_state() {
   // Set brightness and effect states
   root["brightness"] = rgb_led.bright;
   root["effect"] = rgb_led.effect.c_str();
+
+  // Set delay
+  root["delay"] = rgb_led.delay;
 
   // Publish JSON
   char buffer[root.measureLength() + 1];

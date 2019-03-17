@@ -28,6 +28,9 @@ class TricolorLED {
     float value;
 
     int bright;
+
+    int delay = 10;
+
     String state;
     String effect;
 
@@ -54,8 +57,7 @@ class TricolorLED {
     // Common Anode/Cathode modifier
     int _ac_mod;
 
-    // Time and delay in milliseconds
-    int _delay = 10;
+    // Time in milliseconds
     int _time;
 
     // Effects

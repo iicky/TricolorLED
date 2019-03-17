@@ -157,7 +157,7 @@ void TricolorLED::refresh() {
   /*
     Refreshes light effect based on time to avoid holding up loop cycle.
   */
-  if( ((int)(millis() - _time) > _delay) && (state == "ON") ) {
+  if( ((int)(millis() - _time) > delay) && (state == "ON") ) {
 
     // Reset timer
     _time = millis();
