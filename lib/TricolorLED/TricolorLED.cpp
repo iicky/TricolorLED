@@ -60,7 +60,7 @@ void TricolorLED::change_brightness(int percent) {
 
 };
 
-void TricolorLED::hsv(int h, int s, int v) {
+void TricolorLED::hsv(int h, float s, float v) {
   /*
     Sets HSV values, converts and mirrors corresponding RGB values.
   */
@@ -69,6 +69,46 @@ void TricolorLED::hsv(int h, int s, int v) {
   hue = h;
   saturation = s;
   value = v;
+
+  // Calculate RGB values
+  float hprime = h / 60.0;
+  float c = v * s;
+  float x = c * (1 - fabs(fmod(hprime, 2) - 1));
+  float m = v - c;
+
+  Serial.print("H prime: ");
+  Serial.println(hprime);
+  Serial.print("x: ");
+  Serial.println(x);
+
+  float r; float g; float b;
+
+  if (!hprime) {
+    r = 0.0; g = 0.0; b = 0.0;
+  } else if (hprime >= 0 && hprime < 1) {
+    r = c; g = x; b = 0.0;
+  } else if (hprime >= 1 && hprime < 2) {
+    r = x; g = c; b = 0.0;
+  } else if (hprime >= 2 && hprime < 3) {
+    r = 0.0; g = c; b = x;
+  } else if (hprime >= 3 && hprime < 4) {
+    r = 0.0; g = x; b = c;
+  } else if (hprime >= 4 && hprime < 5) {
+    r = x; g = 0.0; b = c;
+  } else if (hprime >= 5 && hprime < 6) {
+    r = c; g = 0.0; b = x;
+  }
+
+  Serial.print("r: ");
+  Serial.println(r);
+  Serial.print("g: ");
+  Serial.println(g);
+  Serial.print("b: ");
+  Serial.println(b);
+
+  red = (int)((r + m) * 255.0);
+  green = (int)((g + m) * 255.0);
+  blue = (int)((b + m) * 255.0);
 
 }
 
@@ -122,6 +162,20 @@ void TricolorLED::refresh() {
     // Reset timer
     _time = millis();
 
+    if(effect == "smooth") {
+
+      // Iterate over hue cycle
+      if(_hue_cycle >= 360) {
+        _hue_cycle = 0;
+      } else {
+        _hue_cycle += 10;
+      }
+
+      // Set hue
+      hsv(_hue_cycle, 1, 1);
+    }
+
+    // Set light pins each cycle
     _set();
 
   }

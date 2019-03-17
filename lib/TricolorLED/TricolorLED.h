@@ -12,7 +12,7 @@ class TricolorLED {
 
     TricolorLED(int red_pin, int green_pin, int blue_pin, int pwm_range, int common_anode);
     void change_brightness(int percent);
-    void hsv(int h, int s, int v);
+    void hsv(int h, float s, float v);
     void off();
     void on();
     void refresh();
@@ -24,8 +24,8 @@ class TricolorLED {
     int blue;
 
     int hue;
-    int saturation;
-    int value;
+    float saturation;
+    float value;
 
     int bright;
     String state;
@@ -59,6 +59,7 @@ class TricolorLED {
     int _time;
 
     // Effects
+    int _hue_cycle;
     int _direction = 1;
 
 };
