@@ -162,13 +162,15 @@ void TricolorLED::refresh() {
     // Reset timer
     _time = millis();
 
+    // Smooth effect
+    // Lights cycle through hue, maintaining brightness
     if(effect == "smooth") {
 
       // Iterate over hue cycle
       if(_hue_cycle >= 360) {
         _hue_cycle = 0;
       } else {
-        _hue_cycle += 10;
+        _hue_cycle += 1;
       }
 
       // Set hue
