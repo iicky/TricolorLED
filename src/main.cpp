@@ -218,6 +218,7 @@ void remote_set() {
       break;
     case 0xFFB24D:
       Serial.println("Flash");
+      rgb_led.effect = "flash";
       update_state();
       break;
 
@@ -239,6 +240,7 @@ void remote_set() {
       break;
     case 0xFF00FF:
       Serial.println("Strobe");
+      rgb_led.effect = "strobe";
       update_state();
       break;
 
@@ -282,6 +284,7 @@ void remote_set() {
       break;
     case 0xFF30CF:
       Serial.println("Smooth");
+      rgb_led.effect = "smooth";
       update_state();
       break;
   }
