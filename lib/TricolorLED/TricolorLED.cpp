@@ -152,6 +152,22 @@ void TricolorLED::refresh() {
     // Reset timer
     _time = millis();
 
+    // Flash effect
+    // Light flashes on and off
+    if(effect == "flash") {
+
+      // Turn light on or off based on direction
+      if(_direction > 0) {
+        bright = (int)((float)_pwm_bright / _pwm_range * 255.0);
+      } else if (_direction < 0) {
+        bright = 0;
+      }
+
+      // Reverse direction
+      _direction = _direction * -1;
+
+    }
+
     // Fade effect
     // Brightness sweeps from full to almost off
     if(effect == "fade" || effect == "fade_rainbow") {
