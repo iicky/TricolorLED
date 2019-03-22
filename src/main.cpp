@@ -114,6 +114,7 @@ void wifi_setup() {
   }
 
   Serial.println("Connected to WiFi");
+  client.publish(MQTT_TOPIC "/log", "WiFi: Connected to WiFi.", false);
 
 }
 
@@ -153,22 +154,25 @@ void remote_set() {
 
     // Remote Row: 1
     case 0xFF906F:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Brightness Up", false);
       Serial.println("Brightness Up");
-      rgb_led.change_brightness(5);
       update_state();
       break;
     case 0xFFB847:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Brightness Down", false);
       Serial.println("Brightness Down");
       rgb_led.change_brightness(-5);
       update_state();
       break;
     case 0xFFF807:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Time", false);
       Serial.println("Time");
       rgb_led.effect = "solid";
       rgb_led.on();
       update_state();
       break;
     case 0xFFB04F:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Power", false);
       Serial.println("Power");
       if (rgb_led.state == "ON") {
         rgb_led.off();
@@ -180,21 +184,25 @@ void remote_set() {
 
     // Remote Row: 2
     case 0xFF9867:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Red", false);
       Serial.println("Red");
       rgb_led.rgb(255, 0, 0);
       update_state();
       break;
     case 0xFFD827:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Green", false);
       Serial.println("Green");
       rgb_led.rgb(0, 128, 0);
       update_state();
       break;
     case 0xFF8877:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Navy", false);
       Serial.println("Navy");
       rgb_led.rgb(0, 0, 128);
       update_state();
       break;
     case 0xFFA857:
+      client.publish(MQTT_TOPIC "/log", "IR Command: White", false);
       Serial.println("White");
       rgb_led.rgb(255, 255, 255);
       update_state();
@@ -202,21 +210,25 @@ void remote_set() {
 
     // Remote Row: 3
     case 0xFFE817:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Orange", false);
       Serial.println("Orange");
       rgb_led.rgb(255, 69, 0);
       update_state();
       break;
     case 0xFF48B7:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Lime Green", false);
       Serial.println("Lime Green");
       rgb_led.rgb(50, 205, 50);
       update_state();
       break;
     case 0xFF6897:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Blue", false);
       Serial.println("Blue");
       rgb_led.rgb(0, 0, 255);
       update_state();
       break;
     case 0xFFB24D:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Flash", false);
       Serial.println("Flash");
       rgb_led.effect = "flash";
       rgb_led.delay = 1000;
@@ -225,21 +237,25 @@ void remote_set() {
 
     // Remote Row: 4
     case 0xFF02FD:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Golden Rod", false);
       Serial.println("Golden Rod");
       rgb_led.rgb(218, 165, 32);
       update_state();
       break;
     case 0xFF32CD:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Lime", false);
       Serial.println("Lime");
       rgb_led.rgb(0, 255, 0);
       update_state();
       break;
     case 0xFF20DF:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Purple", false);
       Serial.println("Purple");
       rgb_led.rgb(128, 0, 128);
       update_state();
       break;
     case 0xFF00FF:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Strobe", false);
       Serial.println("Strobe");
       rgb_led.effect = "strobe";
       rgb_led.delay = 50;
@@ -248,21 +264,25 @@ void remote_set() {
 
     // Remote Row: 5
     case 0xFF50AF:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Yellow", false);
       Serial.println("Yellow");
       rgb_led.rgb(255, 160, 0);
       update_state();
       break;
     case 0xFF7887:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Teal", false);
       Serial.println("Teal");
       rgb_led.rgb(0, 128, 128);
       update_state();
       break;
     case 0xFF708F:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Dodger Blue", false);
       Serial.println("Dodger Blue");
       rgb_led.rgb(30, 144, 255);
       update_state();
       break;
     case 0xFF58A7:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Fade", false);
       Serial.println("Fade");
       rgb_led.effect = "fade";
       rgb_led.delay = 10;
@@ -271,21 +291,25 @@ void remote_set() {
 
     // Remote Row: 6
     case 0xFF38C7:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Yellow Green", false);
       Serial.println("Yellow Green");
       rgb_led.rgb(154, 205, 50);
       update_state();
       break;
     case 0xFF28D7:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Sky Blue", false);
       Serial.println("Sky Blue");
       rgb_led.rgb(135, 206, 235);
       update_state();
       break;
     case 0xFFF00F:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Blue Violet", false);
       Serial.println("Blue Violet");
       rgb_led.rgb(138, 43, 226);
       update_state();
       break;
     case 0xFF30CF:
+      client.publish(MQTT_TOPIC "/log", "IR Command: Smooth", false);
       Serial.println("Smooth");
       rgb_led.effect = "rainbow";
       rgb_led.delay = 100;
@@ -351,7 +375,8 @@ bool set_state(char *message) {
 
   // Parse JSON failed
   if(!root.success()) {
-    Serial.println("Could not parse JSON.");
+    Serial.println("Error: Could not parse JSON.");
+    client.publish(MQTT_TOPIC "/log", "Error: Could not parse JSON.", false);
     return false;
   }
 
