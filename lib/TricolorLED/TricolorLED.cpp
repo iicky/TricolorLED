@@ -152,9 +152,32 @@ void TricolorLED::refresh() {
     // Reset timer
     _time = millis();
 
-    // Smooth effect
+    // Fade effect
+    // Brightness sweeps from full to almost off
+    if(effect == "fade" || effect == "fade_rainbow") {
+
+      // Determine new fade brightness
+      bright = bright + 1 * _direction;
+      _fade_cap = (int)((float)_pwm_bright / _pwm_range * 255.0);
+
+      if(bright > _fade_cap) {
+
+        // Reached peak, reverse direction
+        bright = _fade_cap;
+        _direction = _direction * -1;
+
+      } else if((bright + 10 * _direction) < 10) {
+
+        // Reached bottom, reverse direction
+        bright = 10;
+        _direction = _direction * -1;
+
+      }
+    }
+
+    // Rainbow effect
     // Lights cycle through hue, maintaining brightness
-    if(effect == "smooth") {
+    if(effect == "rainbow" || effect == "fade_rainbow") {
 
       // Iterate over hue cycle
       _hue_cycle += 1;

@@ -284,7 +284,7 @@ void remote_set() {
       break;
     case 0xFF30CF:
       Serial.println("Smooth");
-      rgb_led.effect = "smooth";
+      rgb_led.effect = "rainbow";
       update_state();
       break;
   }

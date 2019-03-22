@@ -63,6 +63,7 @@ class TricolorLED {
     // Effects
     int _hue_cycle;
     int _direction = 1;
+    int _fade_cap;
 
 };
 
