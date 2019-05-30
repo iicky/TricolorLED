@@ -154,7 +154,7 @@ void TricolorLED::refresh() {
 
     // Flash effect
     // Light flashes on and off
-    if(effect == "flash") {
+    if(effect == "flash" || effect == "rainbow flash") {
 
       // Turn light on or off based on direction
       if(_direction > 0) {
@@ -170,7 +170,7 @@ void TricolorLED::refresh() {
 
     // Fade effect
     // Brightness sweeps from full to almost off
-    if(effect == "fade" || effect == "fade_rainbow") {
+    if(effect == "fade" || effect == "rainbow fade") {
 
       // Determine new fade brightness
       bright = bright + 1 * _direction;
@@ -193,7 +193,9 @@ void TricolorLED::refresh() {
 
     // Rainbow effect
     // Lights cycle through hue, maintaining brightness
-    if(effect == "rainbow" || effect == "fade_rainbow") {
+    if(effect == "rainbow" || effect == "rainbow fade" ||
+       effect == "rainbow flash" || effect == "rainbow flicker" ||
+       effect == "rainbow random") {
 
       // Iterate over hue cycle
       _hue_cycle += 1;
@@ -203,6 +205,36 @@ void TricolorLED::refresh() {
 
       // Set hue
       hsv(_hue_cycle, 1, 1);
+
+    }
+
+    // Flicker effect
+    // Brightness dims randomly with random probability
+    if(effect == "flicker" || effect == "rainbow flicker") {
+
+      // Random probability to change
+      int prob_change = random(1, random(10, 30));
+
+      // Random dimness
+      int _dim = (int)(_pwm_bright * (random(10, 50) / 100.00));
+
+      if(prob_change == 1) {
+        // Random dimness
+        bright = (int)(_dim / _pwm_range * 255.0);
+      } else {
+        bright = (int)((float)_pwm_bright / _pwm_range * 255.0);
+      }
+    }
+
+    // Random effect
+    // Brightness changes randomly over a random pace
+    if(effect == "random" || effect == "rainbow random") {
+
+      // Set delay to random time
+      delay = random(10, 2000);
+
+      // Set brightness to random value
+      bright = random(0, (int)((float)_pwm_bright / _pwm_range * 255.0));
 
     }
 
